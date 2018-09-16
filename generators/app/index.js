@@ -2,7 +2,7 @@
 const Generator = require('yeoman-generator');
 
 module.exports = class extends Generator {
-  logo(lines) {
+  logo(lines = []) {
     const logoLines = require('./logo.json');
     console.log('');
     logoLines.forEach((line, idx) => {
@@ -15,6 +15,10 @@ module.exports = class extends Generator {
     console.log('');
   }
 
+  _getName() {
+    return this.appname.replace(/ /g, '-').toLowerCase();
+  }
+
   async prompting() {
     // Have Yeoman greet the user.
     this.logo(['Welcome to ivoryshield module generator', '', 'https://ivoryshield.io']);
@@ -24,7 +28,7 @@ module.exports = class extends Generator {
         type: 'string',
         name: 'name',
         message: 'Your project name',
-        default: this.appname
+        default: this._getName()
       },
       {
         type: 'string',
